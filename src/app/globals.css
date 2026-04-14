@@ -1,26 +1,145 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-dm-sans);
+  --font-heading: var(--font-anton);
+  --font-mono: var(--font-space-grotesk);
+
+  /* Surfaces — elevation by lightness only, same hue */
+  --color-gym-bg: #050505;
+  --color-gym-surface: #0d0d0d;
+  --color-gym-surface-2: #141414;
+  --color-gym-surface-3: #1c1c1c;
+
+  /* Signature — IWF 15kg plate yellow */
+  --color-gym-gold: #ffd700;
+  --color-gym-gold-dark: #e6c200;
+  --color-gym-gold-text: #0a0a0a;
+
+  /* Warm tungsten — secondary accent, lamp-light */
+  --color-gym-tungsten: #e8b84a;
+
+  /* Text hierarchy — chalk on hollín, four levels */
+  --color-gym-chalk: #f5f0e1;
+  --color-gym-text-secondary: #c4c0b3;
+  --color-gym-text-tertiary: #8a867b;
+  --color-gym-text-muted: #5c594f;
+
+  /* Semantic — rust for emphasis/warning */
+  --color-gym-rust: #8b4513;
+
+  /* Border progression — 4 levels, all low-opacity */
+  --color-gym-hairline: rgba(245, 240, 225, 0.04);
+  --color-gym-border: rgba(245, 240, 225, 0.08);
+  --color-gym-border-strong: rgba(255, 215, 0, 0.18);
+  --color-gym-border-focus: rgba(255, 215, 0, 0.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #050505;
+    color: #f5f0e1;
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: #ffd700;
+    color: #0a0a0a;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgba(255, 215, 0, 0.6);
+    outline-offset: 2px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  /* Hero title — fluid display, ultra-tight tracking */
+  .text-bleed {
+    font-size: clamp(2.75rem, 13vw, 14rem);
+    line-height: 0.82;
+    letter-spacing: -0.035em;
+  }
+
+  /* Cinematic stacking: top fade, bottom fade, vignette, tungsten warm glow */
+  .cinematic-overlay {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(232, 184, 74, 0.08) 0%, transparent 60%),
+      linear-gradient(to bottom, rgba(5, 5, 5, 0) 0%, rgba(5, 5, 5, 0.45) 55%, rgba(5, 5, 5, 1) 100%);
+  }
+
+  .cinematic-overlay-top {
+    background: linear-gradient(
+      to top,
+      rgba(5, 5, 5, 0) 0%,
+      rgba(5, 5, 5, 0.7) 100%
+    );
+  }
+
+  /* Noise texture — barely-there grain for authenticity */
+  .grain {
+    position: relative;
+  }
+  .grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.08;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.4 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* Tungsten lamp glow — warm yellow halo for hero title */
+  .gold-glow {
+    text-shadow:
+      0 0 30px rgba(255, 215, 0, 0.22),
+      0 0 80px rgba(232, 184, 74, 0.12);
+  }
+
+  /* Borders-only emphasis — no shadows */
+  .ring-gold {
+    box-shadow: inset 0 0 0 1px rgba(255, 215, 0, 0.4);
+  }
+
+  /* Scroll reveal — default VISIBLE so content never gets stuck hidden if JS fails.
+     JS opts-in by adding .reveal-pending to off-screen elements, observer removes it. */
+  .reveal {
+    transition:
+      opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .reveal.reveal-pending {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .reveal.reveal-pending {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+  }
 }
