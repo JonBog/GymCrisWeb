@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Close, Lock, User, IWFPlate, Clipboard, HeartPulse } from "./icons/GymIcons";
+import { Close, Lock, User, Clipboard, Chronometer } from "./icons/GymIcons";
 
 type Props = {
   open: boolean;
@@ -84,8 +84,8 @@ export function LoginTeaserModal({ open, onClose }: Props) {
 
           <p className="text-gym-text-secondary text-base md:text-lg font-light leading-relaxed max-w-md mb-10">
             Estamos preparando el área de socios. Pronto vas a poder ingresar
-            con tu cuenta para ver tu membresía, tu carnet virtual y tu rutina
-            del mes, todo desde el celular.
+            con tu cuenta para ver tu membresía, el historial de pagos y los
+            horarios del gym, todo desde el celular.
           </p>
 
           {/* Feature list — blueprint icons, no containers */}
@@ -102,35 +102,24 @@ export function LoginTeaserModal({ open, onClose }: Props) {
               </div>
             </li>
             <li className="flex items-start gap-4">
-              <IWFPlate className="w-5 h-5 text-gym-gold mt-0.5 shrink-0" />
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-wide text-gym-chalk">
-                  Carnet virtual
-                </p>
-                <p className="text-xs text-gym-text-tertiary mt-0.5">
-                  Código QR para entrar al gym sin tarjeta física.
-                </p>
-              </div>
-            </li>
-            <li className="flex items-start gap-4">
               <Clipboard className="w-5 h-5 text-gym-gold mt-0.5 shrink-0" />
               <div>
                 <p className="text-sm font-semibold uppercase tracking-wide text-gym-chalk">
-                  Rutina personal
+                  Historial de pagos
                 </p>
                 <p className="text-xs text-gym-text-tertiary mt-0.5">
-                  La que Cris te arma, siempre disponible.
+                  Comprobantes y registro de cada pago que hiciste.
                 </p>
               </div>
             </li>
             <li className="flex items-start gap-4">
-              <HeartPulse className="w-5 h-5 text-gym-gold mt-0.5 shrink-0" />
+              <Chronometer className="w-5 h-5 text-gym-gold mt-0.5 shrink-0" />
               <div>
                 <p className="text-sm font-semibold uppercase tracking-wide text-gym-chalk">
-                  Historial de entrenos
+                  Horarios del gym
                 </p>
                 <p className="text-xs text-gym-text-tertiary mt-0.5">
-                  Tu progreso sin perder una sola sesión.
+                  Cuándo abre, cuándo cierra, avisos de feriados.
                 </p>
               </div>
             </li>
