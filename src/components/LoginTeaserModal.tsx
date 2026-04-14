@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Close, Lock, User, Clipboard, Chronometer } from "./icons/GymIcons";
+import { Close, Lock, User, Clipboard, Chronometer, Dumbbell } from "./icons/GymIcons";
 
 type Props = {
   open: boolean;
@@ -84,8 +84,8 @@ export function LoginTeaserModal({ open, onClose }: Props) {
 
           <p className="text-gym-text-secondary text-base md:text-lg font-light leading-relaxed max-w-md mb-10">
             Estamos preparando el área de socios. Pronto vas a poder ingresar
-            con tu cuenta para ver tu membresía, el historial de pagos y los
-            horarios del gym, todo desde el celular.
+            con tu cuenta para ver tu membresía, la rutina del ciclo, el
+            historial de pagos y los horarios del gym, todo desde el celular.
           </p>
 
           {/* Feature list — blueprint icons, no containers */}
@@ -98,6 +98,17 @@ export function LoginTeaserModal({ open, onClose }: Props) {
                 </p>
                 <p className="text-xs text-gym-text-tertiary mt-0.5">
                   Vencimiento, plan activo, pagos al día.
+                </p>
+              </div>
+            </li>
+            <li className="flex items-start gap-4">
+              <Dumbbell className="w-5 h-5 text-gym-gold mt-0.5 shrink-0" />
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-wide text-gym-chalk">
+                  Rutina del ciclo
+                </p>
+                <p className="text-xs text-gym-text-tertiary mt-0.5">
+                  Series, formatos y notas de Cris para los 5 días del ciclo.
                 </p>
               </div>
             </li>
