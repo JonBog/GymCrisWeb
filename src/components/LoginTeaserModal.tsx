@@ -27,7 +27,7 @@ export function LoginTeaserModal({ open, onClose }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8"
+      className="fixed inset-0 z-[100] overflow-y-auto overscroll-contain"
       role="dialog"
       aria-modal="true"
       aria-labelledby="login-teaser-title"
@@ -37,11 +37,13 @@ export function LoginTeaserModal({ open, onClose }: Props) {
         type="button"
         aria-label="Cerrar"
         onClick={onClose}
-        className="absolute inset-0 bg-gym-bg/90 backdrop-blur-md cursor-default"
+        className="fixed inset-0 bg-gym-bg/90 backdrop-blur-md cursor-default"
       />
 
+      {/* Scroll container — top-aligned on mobile, centered on md+ */}
+      <div className="relative min-h-full flex items-start md:items-center justify-center p-4 md:p-8">
       {/* Panel */}
-      <div className="relative w-full max-w-2xl bg-gym-surface border border-gym-border-strong grain">
+      <div className="relative w-full max-w-2xl bg-gym-surface border border-gym-border-strong grain my-auto">
         {/* Top bar */}
         <div className="flex items-center justify-between px-6 md:px-8 py-4 border-b border-gym-border">
           <div className="flex items-center gap-3">
@@ -153,6 +155,7 @@ export function LoginTeaserModal({ open, onClose }: Props) {
             </button>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );
