@@ -107,14 +107,6 @@ const LEDGER = [
   },
 ];
 
-const ROUTINE = [
-  { num: "01", name: "Press plano c/barra", series: "4 × 10" },
-  { num: "02", name: "Apertura c/mancuernas", series: "12·10·8·6" },
-  { num: "03", name: "Cruce c/cables", series: "4 × 15" },
-  { num: "04", name: "Polea alta c/soga", series: "Drop set" },
-  { num: "05", name: "Press francés c/barra", series: "4 × 12" },
-];
-
 const PLANS = [
   {
     name: "Clase suelta",
@@ -156,7 +148,6 @@ export default function Home() {
             {[
               { label: "Gimnasio", href: "#nosotros" },
               { label: "Servicios", href: "#servicios" },
-              { label: "Rutinas", href: "#rutinas" },
               { label: "Precios", href: "#precios" },
               { label: "Horarios", href: "#horarios" },
               { label: "Contacto", href: "#contacto" },
@@ -277,10 +268,10 @@ export default function Home() {
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </a>
                   <a
-                    href="#rutinas"
+                    href="#precios"
                     className="flex items-center justify-center gap-2 border border-gym-border-strong text-gym-chalk px-8 md:px-10 py-5 md:py-6 font-black text-sm md:text-base tracking-wide uppercase hover:bg-gym-surface-2 transition-colors"
                   >
-                    Ver rutinas
+                    Ver planes
                   </a>
                 </div>
               </div>
@@ -448,84 +439,6 @@ export default function Home() {
                 );
               })}
             </div>
-          </div>
-        </section>
-
-        {/* ===== ROUTINES ===== */}
-        <section id="rutinas" className="reveal w-full bg-gym-surface">
-          <div className="max-w-7xl mx-auto px-6 md:px-12 py-20 md:py-28">
-          <div className="grid lg:grid-cols-[1.2fr_1fr] items-stretch border border-gym-border">
-            <div className="relative p-8 md:p-12 lg:p-16 flex flex-col justify-center overflow-hidden bg-gym-surface">
-              {/* Subtle tungsten glow for depth */}
-              <div
-                aria-hidden
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "radial-gradient(ellipse 50% 70% at 20% 50%, rgba(255,215,0,0.06) 0%, transparent 70%)",
-                }}
-              />
-              <div className="relative z-10">
-              <div className="flex items-center gap-3 mb-8">
-                <span className="w-8 h-px bg-gym-gold" />
-                <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-gym-gold">
-                  Un día común
-                </span>
-              </div>
-
-              <h3 className="font-heading text-4xl md:text-5xl lg:text-6xl uppercase tracking-tight leading-[0.88] text-gym-chalk mb-12">
-                Día 1 —
-                <br />
-                <span className="text-gym-gold">Pecho + Tríceps</span>
-              </h3>
-
-              <ol className="divide-y divide-gym-border">
-                {ROUTINE.map((e) => (
-                  <li
-                    key={e.num}
-                    className="py-5 md:py-6 flex items-baseline gap-5 md:gap-8 group"
-                  >
-                    <span className="font-mono text-xs md:text-sm text-gym-text-tertiary tabular-nums w-8 shrink-0">
-                      {e.num}
-                    </span>
-                    <span className="font-heading text-lg md:text-2xl uppercase tracking-tight text-gym-chalk group-hover:text-gym-gold transition-colors flex-1">
-                      {e.name}
-                    </span>
-                    <span className="font-mono text-xs md:text-sm text-gym-gold tabular-nums shrink-0">
-                      {e.series}
-                    </span>
-                  </li>
-                ))}
-              </ol>
-              </div>
-            </div>
-
-            <a
-              href="/rutinas"
-              className="relative bg-gym-gold group overflow-hidden flex flex-col items-start justify-between min-h-[400px] lg:min-h-[560px] p-10 md:p-16"
-            >
-              <div className="flex items-center gap-3">
-                <span className="w-8 h-px bg-gym-gold-text" />
-                <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-gym-gold-text">
-                  La semana completa
-                </span>
-              </div>
-
-              <div className="w-full">
-                <h4 className="font-heading text-4xl md:text-5xl lg:text-6xl uppercase leading-[0.88] tracking-tight text-gym-gold-text mb-10 md:mb-14">
-                  Pecho. Espalda.
-                  <br />
-                  Pierna. Hombro.
-                  <br />
-                  Brazo.
-                </h4>
-                <div className="inline-flex items-center gap-3 border-t-2 border-gym-gold-text pt-6 font-black text-sm md:text-base uppercase tracking-[0.15em] text-gym-gold-text">
-                  Mirá los 5 días
-                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1.5" />
-                </div>
-              </div>
-            </a>
-          </div>
           </div>
         </section>
 
@@ -851,7 +764,6 @@ export default function Home() {
               {[
                 "Nosotros",
                 "Servicios",
-                "Rutinas",
                 "Precios",
                 "Horarios",
                 "Contacto",
