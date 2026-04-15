@@ -253,7 +253,7 @@ export default function Home() {
 
               <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 lg:items-end">
                 <p className="text-lg md:text-2xl lg:text-3xl font-light text-gym-text-secondary leading-snug max-w-2xl border-l-2 border-gym-gold pl-6 md:pl-8 flex-1">
-                  27 años entrenando vecinos en González Catán. Sin modas, sin promesas inventadas.
+                  27 años transformando vidas en González Catán. Sin modas, sin promesas inventadas.
                   <span className="block mt-2 text-gym-text-tertiary text-base md:text-lg italic">
                     Hierro de verdad y gente que te conoce por el nombre.
                   </span>
