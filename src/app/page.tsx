@@ -88,7 +88,7 @@ const LEDGER = [
   {
     date: "27 años",
     label: "Sin mudanzas",
-    detail: "Tres décadas en Río de la Plata 7462. Miles de vidas transformadas en el mismo piso.",
+    detail: "Tres décadas en Río de la Plata 7462. Miles de vidas transformadas entre estas paredes.",
   },
   {
     date: "3 generaciones",
@@ -103,7 +103,7 @@ const LEDGER = [
   {
     date: "1 dueño",
     label: "Al frente desde el día uno",
-    detail: "El mismo que abrió en el '97. Sigue en el piso todos los días, mirando series y corrigiendo posturas.",
+    detail: "El mismo que abrió en el '97. Sigue caminando el salón todos los días, mirando series y corrigiendo posturas.",
   },
 ];
 
