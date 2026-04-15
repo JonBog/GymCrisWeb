@@ -90,8 +90,9 @@ const RUTINA_MOCK = {
 const ROTATE_SECONDS = 10;
 
 function useClock() {
-  const [time, setTime] = useState(new Date());
+  const [time, setTime] = useState<Date | null>(null);
   useEffect(() => {
+    setTime(new Date());
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
@@ -149,8 +150,12 @@ export default function TVRutinas() {
   });
   const groupEntries = Object.entries(grouped);
 
-  const formattedTime = clock.toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" });
-  const formattedDate = clock.toLocaleDateString("es-AR", { weekday: "long", day: "numeric", month: "long" });
+  const formattedTime = clock
+    ? clock.toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" })
+    : "--:--";
+  const formattedDate = clock
+    ? clock.toLocaleDateString("es-AR", { weekday: "long", day: "numeric", month: "long" })
+    : "";
 
   return (
     <div className="h-screen bg-[#050505] text-white flex flex-col overflow-hidden cursor-none select-none">
