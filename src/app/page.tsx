@@ -62,14 +62,14 @@ const SERVICES = [
   {
     num: "02",
     Icon: Clipboard,
-    name: "Profes en el piso",
-    desc: "Rutinas nuevas cada 15 días, o traé la tuya. Los profes siempre atentos, caminando el salón.",
+    name: "Entrená acompañado",
+    desc: "Renovamos rutinas cada 15 días o seguí la tuya. Profes siempre atentos para ayudarte.",
   },
   {
     num: "03",
     Icon: IWFPlate,
     name: "Peso libre",
-    desc: "Barras olímpicas, mancuernas, discos y kettlebells. Donde se progresa de verdad, plato a plato.",
+    desc: "Barras olímpicas, mancuernas, discos y pesas rusas. Donde se progresa de verdad, plato a plato.",
   },
   {
     num: "04",
