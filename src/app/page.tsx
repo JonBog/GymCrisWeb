@@ -610,7 +610,7 @@ export default function Home() {
                       Dónde estamos
                     </h4>
                     <a
-                      href="https://maps.google.com/?q=Río+de+la+Plata+7462,+González+Catán,+Buenos+Aires"
+                      href="https://www.google.com/maps/place/GYM+CRIS/@-34.8123366,-58.6369609,17z/data=!3m1!4b1!4m6!3m5!1s0x95bcdbe8ad8a0f47:0xc0b69d7f04ed5378!8m2!3d-34.812341!4d-58.634386!16s%2Fg%2F11f66gc2sl"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-start gap-2 text-gym-text-secondary text-base md:text-lg font-light hover:text-gym-gold transition-colors"
