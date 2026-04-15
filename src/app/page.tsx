@@ -62,8 +62,8 @@ const SERVICES = [
   {
     num: "02",
     Icon: Clipboard,
-    name: "Rutinas hechas a mano",
-    desc: "Cada alumno con su rutina propia. Diseñada para tu nivel, ajustada a tu progreso y revisada cuando hace falta.",
+    name: "Entrenamiento guiado y a tu ritmo",
+    desc: "Actualizamos las rutinas del gym cada 15 días para mantener el estímulo, pero sos libre de traer tu propio plan. La clave de nuestro espacio son los profes: siempre atentos y caminando el salón para guiarte en lo que necesites.",
   },
   {
     num: "03",
