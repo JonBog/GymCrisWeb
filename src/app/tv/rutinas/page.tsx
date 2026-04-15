@@ -280,23 +280,23 @@ export default function TVRutinas() {
             {[...Array(2)].map((_, copy) => (
               <div key={copy} className="flex items-center gap-12 px-6">
                 <span className="text-[0.6rem] font-heading uppercase tracking-wide">
-                  <span className="text-[#ffd700] font-bold">PROMO</span>
-                  <span className="text-white/60 ml-2">Musculación + Libre — $15.000/mes</span>
-                </span>
-                <span className="text-[#ffd700]/30">★</span>
-                <span className="text-[0.6rem] font-heading uppercase tracking-wide">
-                  <span className="text-[#ffd700] font-bold">NUEVO</span>
-                  <span className="text-white/60 ml-2">Clases de funcional — Lunes y Miércoles 19hs</span>
-                </span>
-                <span className="text-[#ffd700]/30">★</span>
-                <span className="text-[0.6rem] font-heading uppercase tracking-wide">
                   <span className="text-[#ffd700] font-bold">HORARIOS</span>
-                  <span className="text-white/60 ml-2">Lunes a Viernes 7:00 a 22:00 — Sábados 8:00 a 14:00</span>
+                  <span className="text-white/60 ml-2">Lun-Vie 06:30 a 23:30 · Sáb 08:00 a 18:00 · Domingos cerrado</span>
                 </span>
                 <span className="text-[#ffd700]/30">★</span>
                 <span className="text-[0.6rem] font-heading uppercase tracking-wide">
                   <span className="text-[#ffd700] font-bold">GYMCRIS</span>
-                  <span className="text-white/60 ml-2">Desde 1997 en González Catán — Más de 27 años transformando vidas</span>
+                  <span className="text-white/60 ml-2">Desde 1997 en González Catán · 27 años transformando vidas</span>
+                </span>
+                <span className="text-[#ffd700]/30">★</span>
+                <span className="text-[0.6rem] font-heading uppercase tracking-wide">
+                  <span className="text-[#ffd700] font-bold">UBICACIÓN</span>
+                  <span className="text-white/60 ml-2">Río de la Plata 7462 · González Catán</span>
+                </span>
+                <span className="text-[#ffd700]/30">★</span>
+                <span className="text-[0.6rem] font-heading uppercase tracking-wide">
+                  <span className="text-[#ffd700] font-bold">CONTACTO</span>
+                  <span className="text-white/60 ml-2">WhatsApp +54 11 6252-2431 · Instagram @gimnasiocris1997</span>
                 </span>
                 <span className="text-[#ffd700]/30">★</span>
               </div>
