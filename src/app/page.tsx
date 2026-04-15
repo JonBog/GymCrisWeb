@@ -379,8 +379,9 @@ export default function Home() {
               <p className="text-base md:text-lg leading-relaxed font-light">
                 Somos un gym de barrio. Nada más, nada menos. Río de la Plata
                 7462, 27 años de historia y el mismo dueño que abrió las
-                puertas en el '97. Las paredes están llenas de fotos. Cris te
-                conoce por el nombre.
+                puertas en el '97. Nuestras paredes son testigos de miles de
+                historias de esfuerzo y superación. Acá no sos un número más,
+                estás en casa.
               </p>
               <p className="text-base md:text-lg leading-relaxed font-light italic text-gym-text-tertiary">
                 Los alumnos vuelven de grandes con sus hijos. Algunos, con los
