@@ -62,7 +62,7 @@ const SERVICES = [
   {
     num: "02",
     Icon: Clipboard,
-    name: "Entrená acompañado",
+    name: "Asistencia",
     desc: "Renovamos rutinas cada 15 días o seguí la tuya. Profes siempre atentos para ayudarte.",
   },
   {
