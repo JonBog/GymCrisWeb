@@ -123,7 +123,7 @@ const PLANS = [
   {
     name: "Mensual",
     price: "$33.000",
-    desc: "El plan que usa la mayoría. Acceso libre todo el mes, rutina personal incluida.",
+    desc: "El plan que usa la mayoría. Acceso libre todo el mes.",
     featured: true,
   },
 ];
