@@ -24,7 +24,7 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: "Gimnasio Cris · Templo del fierro en González Catán",
   description:
-    "27 años transformando vidas en Río de la Plata 7462, González Catán. Musculación, peso libre, cardio y rutinas hechas a mano. Vení a entrenar en serio.",
+    "27 años transformando vidas en Río de la Plata 7462, González Catán. Musculación, peso libre, cardio y entrenamiento guiado por profes. Vení a entrenar en serio.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Gimnasio Cris · Templo del fierro en González Catán",
     description:
-      "Gym de barrio desde 1997. Hierro de verdad y gente que te conoce por el nombre. Río de la Plata 7462, González Catán.",
+      "Gym de barrio desde 1997. Hierro de verdad y profes que te acompañan. Río de la Plata 7462, González Catán.",
     url: "https://gymcris.com",
     siteName: "Gimnasio Cris",
     type: "website",
