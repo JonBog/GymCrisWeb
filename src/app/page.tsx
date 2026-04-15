@@ -103,7 +103,7 @@ const LEDGER = [
   {
     date: "1 dueño",
     label: "Al frente desde el día uno",
-    detail: "El mismo Cris que abrió en el '97. Sigue en el piso todos los días, mirando series y corrigiendo posturas.",
+    detail: "El mismo que abrió en el '97. Sigue en el piso todos los días, mirando series y corrigiendo posturas.",
   },
 ];
 
