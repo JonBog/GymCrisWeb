@@ -304,7 +304,7 @@ export default function Home() {
             </div>
 
             {/* Right: ledger entries */}
-            <ol className="divide-y divide-gym-border">
+            <ol className="divide-y divide-gym-border reveal stagger-children">
               {LEDGER.map((entry, i) => (
                 <li
                   key={entry.label}
@@ -408,7 +408,7 @@ export default function Home() {
               <span className="text-gym-gold">alguien que te corrija.</span>
             </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border border-gym-border">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border border-gym-border reveal stagger-children">
               {SERVICES.map((s, i) => {
                 const Icon = s.Icon;
                 return (
@@ -465,7 +465,7 @@ export default function Home() {
               cómodo, no volvés y listo.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 border border-gym-border">
+            <div className="grid grid-cols-1 md:grid-cols-3 border border-gym-border reveal stagger-children">
               {PLANS.map((plan, i) => (
                 <div
                   key={plan.name}
@@ -533,7 +533,7 @@ export default function Home() {
               <span className="text-gym-gold">Excusas chicas.</span>
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 border border-gym-border">
+            <div className="grid grid-cols-1 md:grid-cols-3 border border-gym-border reveal stagger-children">
               {[
                 {
                   days: "Lunes a Viernes",
