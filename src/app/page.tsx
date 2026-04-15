@@ -299,7 +299,7 @@ export default function Home() {
               <p className="text-gym-text-secondary text-base md:text-lg font-light leading-relaxed max-w-md">
                 Cada renglón de esta lista tiene nombre y apellido. Un vecino
                 que entró por primera vez, una máquina que compramos con
-                esfuerzo, un cumpleaños marcado con chalk en la pared del fondo.
+                esfuerzo, un récord que costó meses de insistencia.
               </p>
             </div>
 
