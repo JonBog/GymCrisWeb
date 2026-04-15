@@ -171,4 +171,11 @@
       scroll-behavior: auto;
     }
   }
+
+  /* Marquee — publicidad horizontal infinita (usada en TV). Requiere contenido
+     duplicado 2x para loop seamless (el -50% empuja la 2da copia al lugar de la 1ra). */
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
 }
