@@ -72,7 +72,7 @@
 @layer utilities {
   /* Hero title — fluid display, ultra-tight tracking */
   .text-bleed {
-    font-size: clamp(2.75rem, 13vw, 14rem);
+    font-size: clamp(2.75rem, 13vw, 11rem);
     line-height: 0.82;
     letter-spacing: -0.035em;
   }

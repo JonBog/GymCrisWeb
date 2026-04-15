@@ -176,7 +176,7 @@ export default function Home() {
         {/* ===== HERO ===== */}
         <section
           id="inicio"
-          className="relative min-h-screen flex flex-col justify-end overflow-hidden grain"
+          className="relative min-h-screen max-h-[1100px] flex flex-col justify-between overflow-hidden grain"
         >
           {/* Cinematic background — real Gym Cris photo + tungsten overlays for legibility */}
           <div className="absolute inset-0 z-0">
@@ -243,7 +243,7 @@ export default function Home() {
           </div>
 
           {/* Title block */}
-          <div className="relative z-10 w-full px-6 md:px-12 pb-16 md:pb-24 flex-1 flex flex-col justify-end">
+          <div className="relative z-10 w-full px-6 md:px-12 pb-16 md:pb-24">
             <div className="max-w-7xl mx-auto w-full">
               <h1 className="text-bleed font-heading uppercase mb-8 md:mb-12 gold-glow text-gym-chalk">
                 Templo
