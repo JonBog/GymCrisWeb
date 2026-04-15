@@ -247,3 +247,21 @@ export function Phone(props: IconProps) {
     </svg>
   );
 }
+
+/** Star — solid fill for ratings */
+export function Star(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...props}>
+      <path d="M12 2.5l2.95 6.38 6.55.78-4.9 4.6 1.32 6.74L12 17.77l-5.92 3.23L7.4 14.26 2.5 9.66l6.55-.78L12 2.5z" />
+    </svg>
+  );
+}
+
+/** Google G — multicolor simplified for "reseña en Google" labels */
+export function GoogleMark(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden {...props}>
+      <path fill="#EA4335" d="M12 10.2v3.7h5.2c-.2 1.2-1.5 3.7-5.2 3.7a5.6 5.6 0 1 1 0-11.3c1.8 0 3 .8 3.7 1.4l2.5-2.4C16.7 3.9 14.5 3 12 3a9 9 0 1 0 0 18c5.2 0 8.6-3.6 8.6-8.7 0-.6 0-1-.1-1.5H12z"/>
+    </svg>
+  );
+}

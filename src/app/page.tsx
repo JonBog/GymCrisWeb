@@ -13,6 +13,8 @@ import {
   ArrowRight,
   User,
   Phone,
+  Star,
+  GoogleMark,
 } from "@/components/icons/GymIcons";
 
 function useRevealOnScroll() {
@@ -104,6 +106,33 @@ const LEDGER = [
     date: "1 dueño",
     label: "Al frente desde el día uno",
     detail: "El mismo que abrió en el '97. Sigue caminando el salón todos los días, mirando series y corrigiendo posturas.",
+  },
+];
+
+const TESTIMONIALS = [
+  {
+    author: "Axel Medina",
+    quote:
+      "Ya voy más de dos años en este gym y la verdad es increíble todo. Los entrenadores son los mejores — los de la mañana como los de la tarde, unos capos totales.",
+    rating: 5,
+  },
+  {
+    author: "Cesar Cabreras",
+    quote:
+      "Siempre entrené acá. Muy buenas máquinas, los profesores muy atentos — más si venís con lesiones.",
+    rating: 5,
+  },
+  {
+    author: "Esteban Francov",
+    quote:
+      "El dueño siempre está en el gym, muy cordial y amable. Los profes ayudan y corrigen la técnica. Las máquinas Fox, cómodas. Música con volumen leve.",
+    rating: 5,
+  },
+  {
+    author: "Guadalupe Madona",
+    quote:
+      "Excelente establecimiento, siempre renovándose con las mejores máquinas. Buena onda, buena música y lo mejor, atendido por sus dueños.",
+    rating: 5,
   },
 ];
 
@@ -439,6 +468,78 @@ export default function Home() {
                   </div>
                 );
               })}
+            </div>
+          </div>
+        </section>
+
+        {/* ===== TESTIMONIALS ===== */}
+        <section
+          id="testimonios"
+          className="reveal w-full bg-gym-surface border-t border-gym-border"
+        >
+          <div className="max-w-7xl mx-auto px-6 md:px-12 py-20 md:py-28">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="w-8 h-px bg-gym-gold" />
+              <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-gym-gold">
+                Reseñas en Google
+              </span>
+            </div>
+            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-14 md:mb-16">
+              <h2 className="font-heading text-4xl md:text-6xl lg:text-7xl uppercase leading-[0.88] tracking-tight text-gym-chalk max-w-3xl">
+                Lo que dicen
+                <br />
+                <span className="text-gym-gold">los alumnos.</span>
+              </h2>
+              <div className="flex items-center gap-4 shrink-0">
+                <div className="flex items-center gap-1 text-gym-gold">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="w-5 h-5" />
+                  ))}
+                </div>
+                <span className="font-mono text-xs md:text-sm tracking-wider text-gym-text-secondary uppercase">
+                  5.0 · verificadas en Google
+                </span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border border-gym-border reveal stagger-children">
+              {TESTIMONIALS.map((t) => (
+                <figure
+                  key={t.author}
+                  className="relative p-8 md:p-10 border-r border-b border-gym-border last:border-r-0 md:[&:nth-child(2)]:border-r-0 lg:[&:nth-child(2)]:border-r lg:[&:nth-child(3)]:border-r lg:[&:nth-child(4)]:border-r-0 bg-gym-bg flex flex-col gap-6"
+                >
+                  <div className="flex items-center gap-1 text-gym-gold">
+                    {Array.from({ length: t.rating }).map((_, i) => (
+                      <Star key={i} className="w-4 h-4" />
+                    ))}
+                  </div>
+                  <blockquote className="text-gym-text-secondary text-sm md:text-base font-light leading-relaxed flex-1">
+                    “{t.quote}”
+                  </blockquote>
+                  <figcaption className="pt-6 border-t border-gym-border">
+                    <p className="font-heading text-lg uppercase tracking-tight text-gym-chalk">
+                      {t.author}
+                    </p>
+                    <p className="flex items-center gap-1.5 font-mono text-[10px] tracking-[0.25em] uppercase text-gym-text-tertiary mt-1">
+                      <GoogleMark className="w-3 h-3" />
+                      Reseña en Google
+                    </p>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+
+            <div className="mt-10 md:mt-14">
+              <a
+                href="https://www.google.com/maps/place/GYM+CRIS/@-34.8123366,-58.6369609,17z/data=!3m1!4b1!4m6!3m5!1s0x95bcdbe8ad8a0f47:0xc0b69d7f04ed5378!8m2!3d-34.812341!4d-58.634386!16s%2Fg%2F11f66gc2sl"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-3 border border-gym-border-strong text-gym-chalk px-6 md:px-8 py-4 font-black text-xs md:text-sm uppercase tracking-wider hover:bg-gym-surface-2 transition-colors"
+              >
+                <GoogleMark className="w-4 h-4" />
+                <span>Ver todas las reseñas en Google</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </a>
             </div>
           </div>
         </section>
