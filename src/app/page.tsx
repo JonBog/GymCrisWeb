@@ -88,7 +88,7 @@ const LEDGER = [
   {
     date: "27 años",
     label: "Sin mudanzas",
-    detail: "Tres décadas en Río de la Plata 7462. Los vecinos saben dónde estamos sin buscar el mapa.",
+    detail: "Tres décadas en Río de la Plata 7462. Miles de vidas transformadas en el mismo piso.",
   },
   {
     date: "3 generaciones",
@@ -97,7 +97,7 @@ const LEDGER = [
   },
   {
     date: "5.455",
-    label: "Vecinos en Instagram",
+    label: "Nos siguen en Instagram",
     detail: "Siguen el día a día desde @gimnasiocris1997. Cada récord, cada cumpleaños, cada rutina nueva.",
   },
   {
