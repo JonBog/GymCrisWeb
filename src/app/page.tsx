@@ -509,10 +509,6 @@ export default function Home() {
               ))}
             </div>
 
-            <p className="text-gym-text-muted text-xs md:text-sm font-light italic mt-8 max-w-2xl">
-              Los precios se actualizan con la inflación. Confirmá el último por
-              WhatsApp o Instagram antes de venir.
-            </p>
           </div>
         </section>
 
