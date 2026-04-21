@@ -265,3 +265,13 @@ export function GoogleMark(props: IconProps) {
     </svg>
   );
 }
+
+/** Play — triangle inside circle, for video playback */
+export function Play(props: IconProps) {
+  return (
+    <svg {...base} aria-hidden {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M10 8.5l6 3.5-6 3.5V8.5z" fill="currentColor" />
+    </svg>
+  );
+}
