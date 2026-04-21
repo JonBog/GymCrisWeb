@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --hostname gymcris.test --port 3000 --experimental-https --experimental-https-key ./certs/gymcris.test-key.pem --experimental-https-cert ./certs/gymcris.test.pem",
     "build": "next build",
     "start": "next start",
+    "preview": "next build && NODE_ENV=production node server.js",
     "lint": "eslint"
   },
   "dependencies": {

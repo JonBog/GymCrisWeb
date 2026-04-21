@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Anton, DM_Sans, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import { PWARegister } from "@/components/PWARegister";
 
 const anton = Anton({
   variable: "--font-anton",
@@ -26,6 +27,13 @@ export const metadata: Metadata = {
   description:
     "27 años transformando vidas en Río de la Plata 7462, González Catán. Musculación, peso libre, cardio y entrenamiento guiado por profes. Vení a entrenar en serio.",
   manifest: "/manifest.json",
+  icons: {
+    icon: [
+      { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icons/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: "/icons/apple-touch-icon.png",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
@@ -58,7 +66,10 @@ export default function RootLayout({
       lang="es"
       className={`${anton.variable} ${dmSans.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <PWARegister />
+      </body>
     </html>
   );
 }
