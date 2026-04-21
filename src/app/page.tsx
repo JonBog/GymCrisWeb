@@ -12,7 +12,6 @@ import {
   HeartPulse,
   MapPin,
   Instagram,
-  Facebook,
   ArrowRight,
   User,
   Phone,
@@ -814,9 +813,6 @@ export default function Home() {
                       +54 11 6252-2431
                       <ArrowRight className="w-4 h-4" />
                     </a>
-                    <p className="text-gym-text-tertiary text-sm font-light italic mt-1">
-                      Escribinos si querés, pero no hace falta.
-                    </p>
                   </div>
                 </li>
 
@@ -835,29 +831,6 @@ export default function Home() {
                       className="inline-flex items-center gap-2 text-gym-gold text-base md:text-lg font-semibold hover:text-gym-tungsten transition-colors"
                     >
                       @gimnasiocris1997
-                      <ArrowRight className="w-4 h-4" />
-                    </a>
-                    <p className="text-gym-text-tertiary text-sm font-light italic mt-1">
-                      Mirá el día a día antes de venir.
-                    </p>
-                  </div>
-                </li>
-
-                <li className="flex items-start gap-5">
-                  <div className="border border-gym-border-strong p-3 shrink-0">
-                    <Facebook className="w-5 h-5 md:w-6 md:h-6 text-gym-gold" />
-                  </div>
-                  <div>
-                    <h4 className="font-heading text-xl md:text-2xl uppercase text-gym-chalk tracking-tight mb-1">
-                      Facebook
-                    </h4>
-                    <a
-                      href="https://web.facebook.com/profile.php?id=100063726812998"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-gym-gold text-base md:text-lg font-semibold hover:text-gym-tungsten transition-colors"
-                    >
-                      Gimnasio Cris
                       <ArrowRight className="w-4 h-4" />
                     </a>
                   </div>
