@@ -1,7 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { LoginTeaserModal } from "@/components/LoginTeaserModal";
+import Link from "next/link";
+import { LoginModal } from "@/components/LoginModal";
+import { InstallPWAButton } from "@/components/InstallPWAButton";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   Dumbbell,
   Clipboard,
@@ -136,30 +139,86 @@ const TESTIMONIALS = [
   },
 ];
 
-const PLANS = [
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://panel.gymcris.test";
+
+type PlanKey = "clase" | "semanal" | "mensual";
+
+type PlanesHomeResponse = Partial<Record<PlanKey, number | null>>;
+
+const PLAN_DEFINITIONS: Array<{
+  key: PlanKey;
+  name: string;
+  fallbackPrice: number;
+  desc: string;
+  featured: boolean;
+}> = [
   {
+    key: "clase",
     name: "Clase suelta",
-    price: "$7.000",
+    fallbackPrice: 7000,
     desc: "Venite a probar un día. Si te gusta el fierro y la gente, hablamos.",
     featured: false,
   },
   {
+    key: "semanal",
     name: "Semanal",
-    price: "$12.000",
+    fallbackPrice: 12000,
     desc: "Siete días de acceso completo. Ideal para testear antes de comprometerte al mes.",
     featured: false,
   },
   {
+    key: "mensual",
     name: "Mensual",
-    price: "$33.000",
+    fallbackPrice: 33000,
     desc: "El plan que usa la mayoría. Acceso libre todo el mes.",
     featured: true,
   },
 ];
 
+const priceFormatter = new Intl.NumberFormat("es-AR", {
+  style: "currency",
+  currency: "ARS",
+  maximumFractionDigits: 0,
+});
+
+function formatPrice(value: number): string {
+  return priceFormatter.format(value).replace(/\s/g, "");
+}
+
 export default function Home() {
   useRevealOnScroll();
   const [loginOpen, setLoginOpen] = useState(false);
+  const { isAuthenticated, user } = useAuth();
+  const [prices, setPrices] = useState<PlanesHomeResponse>({});
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch(`${API_URL}/api/public/planes-home`, {
+      headers: { Accept: "application/json" },
+      cache: "no-store",
+    })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!cancelled && data && typeof data === "object") {
+          setPrices(data as PlanesHomeResponse);
+        }
+      })
+      .catch(() => {
+        /* si falla, usamos fallbackPrice de cada PLAN_DEFINITION */
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const plans = PLAN_DEFINITIONS.map((def) => ({
+    name: def.name,
+    price: formatPrice(
+      typeof prices[def.key] === "number" ? (prices[def.key] as number) : def.fallbackPrice,
+    ),
+    desc: def.desc,
+    featured: def.featured,
+  }));
 
   return (
     <>
@@ -190,14 +249,27 @@ export default function Home() {
               </a>
             ))}
           </div>
-          <button
-            type="button"
-            onClick={() => setLoginOpen(true)}
-            className="group flex items-center gap-2 bg-gym-gold text-gym-gold-text font-black px-5 md:px-6 py-2.5 text-[11px] uppercase tracking-[0.15em] hover:bg-gym-tungsten transition-colors"
-          >
-            <User className="w-4 h-4" />
-            <span>Ingresar</span>
-          </button>
+          <div className="flex items-center gap-3">
+            <InstallPWAButton />
+            {isAuthenticated ? (
+              <Link
+                href="/socio"
+                className="group flex items-center gap-2 bg-gym-gold text-gym-gold-text font-black px-5 md:px-6 py-2.5 text-[11px] uppercase tracking-[0.15em] hover:bg-gym-tungsten transition-colors"
+              >
+                <User className="w-4 h-4" />
+                <span>{user?.Nombre ? `Hola, ${user.Nombre}` : "Mi cuenta"}</span>
+              </Link>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setLoginOpen(true)}
+                className="group flex items-center gap-2 bg-gym-gold text-gym-gold-text font-black px-5 md:px-6 py-2.5 text-[11px] uppercase tracking-[0.15em] hover:bg-gym-tungsten transition-colors"
+              >
+                <User className="w-4 h-4" />
+                <span>Ingresar</span>
+              </button>
+            )}
+          </div>
         </nav>
       </header>
 
@@ -568,11 +640,11 @@ export default function Home() {
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 border border-gym-border reveal stagger-children">
-              {PLANS.map((plan, i) => (
+              {plans.map((plan, i) => (
                 <div
                   key={plan.name}
                   className={`relative p-8 md:p-10 lg:p-12 flex flex-col ${
-                    i < PLANS.length - 1
+                    i < plans.length - 1
                       ? "border-b md:border-b-0 md:border-r border-gym-border"
                       : ""
                   } ${plan.featured ? "bg-gym-surface" : ""}`}
@@ -887,7 +959,7 @@ export default function Home() {
         </div>
       </footer>
 
-      <LoginTeaserModal open={loginOpen} onClose={() => setLoginOpen(false)} />
+      <LoginModal open={loginOpen} onClose={() => setLoginOpen(false)} />
     </>
   );
 }
