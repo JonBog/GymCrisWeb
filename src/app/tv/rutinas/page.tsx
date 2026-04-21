@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { useTvRutina } from "@/lib/tvApi";
-import { TvDeviceSetup } from "@/components/tv/TvDeviceSetup";
 import { TvQR } from "@/components/tv/TvQR";
 import type { TvRutina } from "@/types/tvRutina";
 
@@ -19,10 +19,17 @@ function useClock() {
 }
 
 export default function TVRutinasPage() {
-  const { state, saveToken } = useTvRutina();
+  const router = useRouter();
+  const { state } = useTvRutina();
+
+  useEffect(() => {
+    if (state.status === "no-token" || state.status === "invalid-token") {
+      router.replace("/tv/setup");
+    }
+  }, [state.status, router]);
 
   if (state.status === "no-token" || state.status === "invalid-token") {
-    return <TvDeviceSetup variant={state.status} onSave={saveToken} />;
+    return <TvStatusScreen label="Redirigiendo…" />;
   }
   if (state.status === "loading") return <TvStatusScreen label="Cargando rutina…" />;
   if (state.status === "no-rutina") {
