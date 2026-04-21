@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Anton, DM_Sans, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "@/contexts/AuthContext";
 import { PWARegister } from "@/components/PWARegister";
 
 const anton = Anton({
@@ -67,7 +68,7 @@ export default function RootLayout({
       className={`${anton.variable} ${dmSans.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {children}
+        <AuthProvider>{children}</AuthProvider>
         <PWARegister />
       </body>
     </html>
