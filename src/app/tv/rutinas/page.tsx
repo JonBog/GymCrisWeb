@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTvRutina } from "@/lib/tvApi";
 import { TvQR } from "@/components/tv/TvQR";
@@ -120,9 +121,14 @@ function TVRutinasView({ rutina }: { rutina: TvRutina }) {
       {/* ===== TOP BAR ===== */}
       <header className="flex items-center justify-between px-10 py-2 shrink-0">
         <div className="flex items-center gap-4">
-          <h1 className="font-heading text-xl font-black text-[#ffd700] uppercase tracking-tighter">
-            GymCris
-          </h1>
+          <Image
+            src="/icons/icon-512.png"
+            alt="GymCris"
+            width={72}
+            height={72}
+            className="w-9 h-9"
+            priority
+          />
           <div className="h-5 w-px bg-[rgba(255,215,0,0.25)]" />
           <p className="text-white/50 text-xs font-mono uppercase tracking-wider">{rutina.nombre}</p>
         </div>
@@ -243,12 +249,12 @@ function TVRutinasView({ rutina }: { rutina: TvRutina }) {
                 <span className="text-[#ffd700]/30">★</span>
                 <span className="text-[0.6rem] font-heading uppercase tracking-wide">
                   <span className="text-[#ffd700] font-bold">GYMCRIS</span>
-                  <span className="text-white/60 ml-2">Desde 1997 en González Catán · 27 años transformando vidas</span>
+                  <span className="text-white/60 ml-2">Desde 1997 en Virrey del Pino · 29 años transformando vidas</span>
                 </span>
                 <span className="text-[#ffd700]/30">★</span>
                 <span className="text-[0.6rem] font-heading uppercase tracking-wide">
                   <span className="text-[#ffd700] font-bold">UBICACIÓN</span>
-                  <span className="text-white/60 ml-2">Río de la Plata 7462 · González Catán</span>
+                  <span className="text-white/60 ml-2">Río de la Plata 7462 · Virrey del Pino</span>
                 </span>
                 <span className="text-[#ffd700]/30">★</span>
                 <span className="text-[0.6rem] font-heading uppercase tracking-wide">

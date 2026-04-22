@@ -1,6 +1,6 @@
 "use client";
 
-import { IWFPlate } from "@/components/icons/GymIcons";
+import Image from "next/image";
 import type { EstadoMembresia } from "@/types/socio";
 
 type PlanInfo = {
@@ -108,12 +108,13 @@ export function TarjetaVirtual({
       <div className={`relative h-full ${styles.inner} p-6 md:p-8 flex flex-col justify-between`}>
         {/* Top row: logo + plan */}
         <div className="flex items-start justify-between">
-          <div className="flex items-center gap-2">
-            <IWFPlate className="w-6 h-6" />
-            <span className="font-heading text-xl md:text-2xl tracking-tight uppercase leading-none">
-              GymCris
-            </span>
-          </div>
+          <Image
+            src="/icons/icon-512.png"
+            alt="GymCris"
+            width={80}
+            height={80}
+            className="w-10 h-10 md:w-12 md:h-12"
+          />
           <span
             className={`inline-flex items-center px-3 py-1 text-[9px] font-bold uppercase tracking-[0.2em] ${styles.chip}`}
           >

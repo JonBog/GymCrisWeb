@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { LoginModal } from "@/components/LoginModal";
 import { InstallPWAButton } from "@/components/InstallPWAButton";
@@ -61,7 +62,7 @@ const SERVICES = [
     num: "01",
     Icon: Dumbbell,
     name: "Musculación",
-    desc: "Máquinas para todos los grupos. Desde el primer día sabés qué hacer y cómo hacerlo bien.",
+    desc: "Máquinas para todos los grupos musculares. Desde el primer día sabés qué hacer y cómo hacerlo bien.",
   },
   {
     num: "02",
@@ -73,24 +74,24 @@ const SERVICES = [
     num: "03",
     Icon: IWFPlate,
     name: "Peso libre",
-    desc: "Barras olímpicas, mancuernas, discos y pesas rusas. Donde se progresa de verdad, plato a plato.",
+    desc: "Barras olímpicas, mancuernas, discos y pesas rusas. Donde se progresa de verdad, disco a disco.",
   },
   {
     num: "04",
     Icon: HeartPulse,
     name: "Cardio",
-    desc: "Cintas, bicis y elípticos. Para calentar, para cerrar, o como eje del entrenamiento. Vos elegís.",
+    desc: "Bicis y escaladores. Para calentar, para cerrar, o como eje del entrenamiento. Vos elegís.",
   },
 ];
 
 const LEDGER = [
   {
-    date: "14·03·1997",
+    date: "10-10-1997",
     label: "Apertura",
     detail: "Primera sesión. Mismo barrio, mismo dueño, misma forma de entrenar en serio.",
   },
   {
-    date: "27 años",
+    date: "29 años",
     label: "Sin mudanzas",
     detail: "Tres décadas en Río de la Plata 7462. Miles de vidas transformadas entre estas paredes.",
   },
@@ -100,7 +101,7 @@ const LEDGER = [
     detail: "Padres que trajeron a los hijos. Hijos que hoy traen a los nietos. Así se mide un gym de barrio.",
   },
   {
-    date: "5.455",
+    date: "6.000",
     label: "Nos siguen en Instagram",
     detail: "Siguen el día a día desde @gimnasiocris1997. Cada récord, cada cumpleaños, cada rutina nueva.",
   },
@@ -174,6 +175,33 @@ const PLAN_DEFINITIONS: Array<{
   },
 ];
 
+type PromoKey = "trimestral" | "familiar";
+
+type PromocionesHomeResponse = Partial<Record<PromoKey, number | null>>;
+
+const PROMO_DEFINITIONS: Array<{
+  key: PromoKey;
+  name: string;
+  fallbackPrice: number;
+  desc: string;
+  note: string | null;
+}> = [
+  {
+    key: "trimestral",
+    name: "Trimestral",
+    fallbackPrice: 85000,
+    desc: "Tres meses pagando de una. Para los que ya saben que esto es a largo plazo.",
+    note: null,
+  },
+  {
+    key: "familiar",
+    name: "Plan Familiar",
+    fallbackPrice: 30000,
+    desc: "Para grupos de tres o más. Se entrena mejor acompañado.",
+    note: "c/u · 3 personas o más",
+  },
+];
+
 const priceFormatter = new Intl.NumberFormat("es-AR", {
   style: "currency",
   currency: "ARS",
@@ -189,6 +217,27 @@ export default function Home() {
   const [loginOpen, setLoginOpen] = useState(false);
   const { isAuthenticated, user } = useAuth();
   const [prices, setPrices] = useState<PlanesHomeResponse>({});
+  const [promoPrices, setPromoPrices] = useState<PromocionesHomeResponse>({});
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch(`${API_URL}/api/public/promociones-home`, {
+      headers: { Accept: "application/json" },
+      cache: "no-store",
+    })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!cancelled && data && typeof data === "object") {
+          setPromoPrices(data as PromocionesHomeResponse);
+        }
+      })
+      .catch(() => {
+        /* si falla, usamos fallbackPrice de cada PROMO_DEFINITION */
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -219,6 +268,15 @@ export default function Home() {
     featured: def.featured,
   }));
 
+  const promos = PROMO_DEFINITIONS.map((def) => ({
+    name: def.name,
+    price: formatPrice(
+      typeof promoPrices[def.key] === "number" ? (promoPrices[def.key] as number) : def.fallbackPrice,
+    ),
+    desc: def.desc,
+    note: def.note,
+  }));
+
   return (
     <>
       {/* ===== NAV ===== */}
@@ -226,10 +284,17 @@ export default function Home() {
         <nav className="flex justify-between items-center w-full max-w-7xl mx-auto px-6 py-4 md:py-5">
           <a
             href="#inicio"
-            className="flex items-center gap-2 text-xl md:text-2xl font-heading tracking-tight text-gym-gold uppercase"
+            aria-label="Gimnasio Cris · Inicio"
+            className="flex items-center"
           >
-            <IWFPlate className="w-5 h-5 md:w-6 md:h-6" />
-            GymCris
+            <Image
+              src="/icons/icon-512.png"
+              alt="Gimnasio Cris"
+              width={96}
+              height={96}
+              priority
+              className="w-10 h-10 md:w-12 md:h-12"
+            />
           </a>
           <div className="hidden lg:flex items-center gap-8">
             {[
@@ -346,16 +411,16 @@ export default function Home() {
           <div className="relative z-10 w-full px-6 md:px-12 pb-16 md:pb-24 min-[2560px]:my-auto min-[2560px]:pb-0">
             <div className="max-w-7xl mx-auto w-full">
               <h1 className="text-bleed font-heading uppercase mb-8 md:mb-12 gold-glow text-gym-chalk">
-                Templo
+                Más que
                 <br />
-                <span className="text-gym-gold italic">del fierro.</span>
+                <span className="text-gym-gold italic">un gimnasio,</span>
               </h1>
 
               <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 lg:items-end">
                 <p className="text-lg md:text-2xl lg:text-3xl font-light text-gym-text-secondary leading-snug max-w-2xl border-l-2 border-gym-gold pl-6 md:pl-8 flex-1">
-                  27 años transformando vidas en González Catán. Sin modas, sin promesas inventadas.
+                  29 años transformando vidas en Virrey del Pino. Sin modas, sin promesas inventadas.
                   <span className="block mt-2 text-gym-text-tertiary text-base md:text-lg italic">
-                    Hierro de verdad y gente que te conoce por el nombre.
+                    Somos familia.
                   </span>
                 </p>
 
@@ -478,7 +543,7 @@ export default function Home() {
               </p>
               <p className="text-base md:text-lg leading-relaxed font-light">
                 Somos un gym de barrio. Nada más, nada menos. Río de la Plata
-                7462, 27 años de historia y el mismo dueño que abrió las
+                7462, 29 años de historia y el mismo dueño que abrió las
                 puertas en el '97. Nuestras paredes son testigos de miles de
                 historias de esfuerzo y superación. Acá no sos un número más,
                 estás en casa.
@@ -634,8 +699,7 @@ export default function Home() {
             </h2>
             <p className="text-gym-text-secondary text-base md:text-lg font-light leading-relaxed max-w-2xl mb-16 md:mb-20">
               Probá una clase, probá una semana, o arrancá directo con el mes.
-              No hay matrícula ni contrato de permanencia. Si no te sentís
-              cómodo, no volvés y listo.
+              No hay matrícula ni contrato de permanencia.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 border border-gym-border reveal stagger-children">
@@ -673,6 +737,55 @@ export default function Home() {
                         ? "border-gym-gold text-gym-gold hover:text-gym-tungsten"
                         : "border-gym-border-strong text-gym-chalk hover:text-gym-gold"
                     }`}
+                  >
+                    Venite a probar
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </a>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-10 md:mt-14 flex items-center gap-3">
+              <span className="w-8 h-px bg-gym-gold" />
+              <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-gym-gold">
+                Promociones
+              </span>
+            </div>
+            <p className="mt-4 text-gym-text-tertiary text-sm md:text-base font-light leading-relaxed max-w-2xl mb-8 md:mb-10">
+              Para los que ya saben que esto es a largo plazo, o para venir acompañado.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 border border-gym-border reveal stagger-children">
+              {promos.map((promo, i) => (
+                <div
+                  key={promo.name}
+                  className={`relative p-8 md:p-10 lg:p-12 flex flex-col ${
+                    i < promos.length - 1
+                      ? "border-b md:border-b-0 md:border-r border-gym-border"
+                      : ""
+                  }`}
+                >
+                  <span className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.35em] text-gym-gold font-bold mb-5 md:mb-6">
+                    {promo.name}
+                  </span>
+
+                  <div className="flex items-baseline gap-3 mb-8 md:mb-10">
+                    <span className="font-heading text-5xl md:text-6xl lg:text-7xl tracking-tight leading-none text-gym-chalk">
+                      {promo.price}
+                    </span>
+                    {promo.note && (
+                      <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.25em] text-gym-text-tertiary">
+                        {promo.note}
+                      </span>
+                    )}
+                  </div>
+
+                  <p className="text-gym-text-tertiary text-sm md:text-[15px] font-light leading-relaxed mb-8 flex-1 max-w-xs">
+                    {promo.desc}
+                  </p>
+
+                  <a
+                    href="#contacto"
+                    className="group inline-flex items-center gap-2 border-t border-gym-border-strong pt-5 font-black text-xs md:text-sm uppercase tracking-[0.15em] text-gym-chalk hover:text-gym-gold transition-colors"
                   >
                     Venite a probar
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -768,8 +881,8 @@ export default function Home() {
               </h2>
 
               <p className="text-gym-text-secondary text-base md:text-lg font-light leading-relaxed mb-10 md:mb-12 max-w-md">
-                Acá no hay turnos ni recepcionistas. Venite sin anunciarte — los
-                fierros están esperando y siempre hay alguien para mostrarte el lugar.
+                Acá no hay turnos. Venite sin anunciarte — los fierros están
+                esperando y siempre hay alguien para mostrarte el lugar.
               </p>
 
               <ul className="space-y-7 md:space-y-9">
@@ -790,7 +903,7 @@ export default function Home() {
                       <span>
                         Río de la Plata 7462
                         <br />
-                        González Catán · La Matanza, Buenos Aires
+                        Virrey del Pino · La Matanza, Buenos Aires
                       </span>
                     </a>
                   </div>
@@ -898,10 +1011,16 @@ export default function Home() {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-10 mb-12">
             <a
               href="#inicio"
-              className="flex items-center gap-3 text-3xl md:text-4xl font-heading text-gym-gold uppercase tracking-tight gold-glow"
+              aria-label="Gimnasio Cris · Inicio"
+              className="flex items-center"
             >
-              <IWFPlate className="w-8 h-8 md:w-10 md:h-10" />
-              GymCris
+              <Image
+                src="/icons/icon-512.png"
+                alt="Gimnasio Cris"
+                width={144}
+                height={144}
+                className="w-16 h-16 md:w-20 md:h-20"
+              />
             </a>
             <div className="flex flex-wrap gap-6 md:gap-10">
               {[
@@ -926,7 +1045,7 @@ export default function Home() {
               © 2026 Gimnasio Cris · Desde 1997
             </p>
             <p className="text-gym-text-muted text-[10px] uppercase tracking-[0.3em]">
-              Río de la Plata 7462 · González Catán, Buenos Aires
+              Río de la Plata 7462 · Virrey del Pino, Buenos Aires
             </p>
           </div>
         </div>

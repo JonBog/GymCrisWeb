@@ -24,9 +24,9 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Gimnasio Cris · Templo del fierro en González Catán",
+  title: "Gimnasio Cris · Más que un gimnasio en Virrey del Pino",
   description:
-    "27 años transformando vidas en Río de la Plata 7462, González Catán. Musculación, peso libre, cardio y entrenamiento guiado por profes. Vení a entrenar en serio.",
+    "29 años transformando vidas en Río de la Plata 7462, Virrey del Pino. Musculación, peso libre, cardio y entrenamiento guiado por profes. Vení a entrenar en serio.",
   manifest: "/manifest.json",
   icons: {
     icon: [
@@ -41,9 +41,9 @@ export const metadata: Metadata = {
     title: "Gym Cris",
   },
   openGraph: {
-    title: "Gimnasio Cris · Templo del fierro en González Catán",
+    title: "Gimnasio Cris · Más que un gimnasio en Virrey del Pino",
     description:
-      "Gym de barrio desde 1997. Hierro de verdad y profes que te acompañan. Río de la Plata 7462, González Catán.",
+      "Gym de barrio desde 1997. Somos familia y profes que te acompañan. Río de la Plata 7462, Virrey del Pino.",
     url: "https://gymcris.com",
     siteName: "Gimnasio Cris",
     type: "website",

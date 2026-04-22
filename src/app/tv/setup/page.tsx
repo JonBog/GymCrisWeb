@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { getTvToken, setTvToken, pairCode, pollToken } from "@/lib/tvApi";
 
@@ -142,8 +143,15 @@ export default function TvSetupPage() {
     <div className="h-screen bg-[#050505] text-white flex flex-col items-center justify-center px-10 select-none">
       <div className="flex items-center gap-3 mb-10">
         <div className="w-2 h-2 rounded-full bg-[#ffd700] animate-pulse" />
+        <Image
+          src="/icons/icon-512.png"
+          alt="GymCris"
+          width={48}
+          height={48}
+          className="w-6 h-6"
+        />
         <span className="font-mono text-[0.65rem] uppercase tracking-[0.35em] text-[#ffd700] font-bold">
-          GymCris · TV
+          · TV
         </span>
       </div>
 
