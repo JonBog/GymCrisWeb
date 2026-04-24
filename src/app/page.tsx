@@ -202,6 +202,150 @@ const PROMO_DEFINITIONS: Array<{
   },
 ];
 
+type DiaSlug =
+  | "lunes"
+  | "martes"
+  | "miercoles"
+  | "jueves"
+  | "viernes"
+  | "sabado"
+  | "domingo";
+
+type HorarioDia = {
+  dia: DiaSlug;
+  abre: string | null;
+  cierra: string | null;
+  cerrado: boolean;
+};
+
+type HorariosFeriados = {
+  abre: string | null;
+  cierra: string | null;
+  cerrado: boolean;
+};
+
+type HorariosHomeResponse = {
+  dias: HorarioDia[];
+  feriados: HorariosFeriados;
+};
+
+type HorarioSlot = {
+  key: string;
+  label: string;
+  time: string;
+  caption: string;
+  closed: boolean;
+};
+
+const HORARIOS_FALLBACK: HorariosHomeResponse = {
+  dias: [
+    { dia: "lunes", abre: "06:30", cierra: "23:30", cerrado: false },
+    { dia: "martes", abre: "06:30", cierra: "23:30", cerrado: false },
+    { dia: "miercoles", abre: "06:30", cierra: "23:30", cerrado: false },
+    { dia: "jueves", abre: "06:30", cierra: "23:30", cerrado: false },
+    { dia: "viernes", abre: "06:30", cierra: "23:30", cerrado: false },
+    { dia: "sabado", abre: "08:00", cierra: "18:00", cerrado: false },
+    { dia: "domingo", abre: null, cierra: null, cerrado: true },
+  ],
+  feriados: { abre: "09:00", cierra: "21:00", cerrado: false },
+};
+
+const DIA_LABEL: Record<DiaSlug, string> = {
+  lunes: "Lunes",
+  martes: "Martes",
+  miercoles: "Miércoles",
+  jueves: "Jueves",
+  viernes: "Viernes",
+  sabado: "Sábados",
+  domingo: "Domingos",
+};
+
+function formatRange(
+  abre: string | null,
+  cierra: string | null,
+  cerrado: boolean,
+): string {
+  if (cerrado || !abre || !cierra) return "Cerrado";
+  return `${abre} — ${cierra}`;
+}
+
+function sameSchedule(a: HorarioDia, b: HorarioDia): boolean {
+  return a.cerrado === b.cerrado && a.abre === b.abre && a.cierra === b.cierra;
+}
+
+function groupSchedule(data: HorariosHomeResponse): HorarioSlot[] {
+  const slots: HorarioSlot[] = [];
+  const findDia = (slug: DiaSlug) => data.dias.find((d) => d.dia === slug);
+
+  const weekdaySlugs: DiaSlug[] = ["lunes", "martes", "miercoles", "jueves", "viernes"];
+  const weekdays = weekdaySlugs
+    .map(findDia)
+    .filter((d): d is HorarioDia => d !== undefined);
+
+  if (
+    weekdays.length === 5 &&
+    weekdays.every((d) => sameSchedule(d, weekdays[0]))
+  ) {
+    slots.push({
+      key: "lun-vie",
+      label: "Lunes a Viernes",
+      time: formatRange(weekdays[0].abre, weekdays[0].cierra, weekdays[0].cerrado),
+      caption: weekdays[0].cerrado ? "" : "17 horas por día. Elegí la tuya.",
+      closed: weekdays[0].cerrado,
+    });
+  } else {
+    weekdays.forEach((d) => {
+      slots.push({
+        key: d.dia,
+        label: DIA_LABEL[d.dia],
+        time: formatRange(d.abre, d.cierra, d.cerrado),
+        caption: "",
+        closed: d.cerrado,
+      });
+    });
+  }
+
+  const sabado = findDia("sabado");
+  if (sabado) {
+    slots.push({
+      key: "sabado",
+      label: DIA_LABEL.sabado,
+      time: formatRange(sabado.abre, sabado.cierra, sabado.cerrado),
+      caption: sabado.cerrado ? "" : "10 horas para ponerte al día.",
+      closed: sabado.cerrado,
+    });
+  }
+
+  const domingo = findDia("domingo");
+  if (domingo) {
+    slots.push({
+      key: "domingo",
+      label: DIA_LABEL.domingo,
+      time: formatRange(domingo.abre, domingo.cierra, domingo.cerrado),
+      caption: domingo.cerrado
+        ? "El único día que descansan los fierros. Aprovechalo vos también."
+        : "",
+      closed: domingo.cerrado,
+    });
+  }
+
+  if (data.feriados && !data.feriados.cerrado) {
+    slots.push({
+      key: "feriados",
+      label: "Feriados",
+      time: formatRange(
+        data.feriados.abre,
+        data.feriados.cierra,
+        data.feriados.cerrado,
+      ),
+      caption: "Abrimos también los feriados. Sin excusas.",
+      closed: false,
+    });
+  }
+
+  return slots;
+}
+
 const priceFormatter = new Intl.NumberFormat("es-AR", {
   style: "currency",
   currency: "ARS",
@@ -218,6 +362,33 @@ export default function Home() {
   const { isAuthenticated, user } = useAuth();
   const [prices, setPrices] = useState<PlanesHomeResponse>({});
   const [promoPrices, setPromoPrices] = useState<PromocionesHomeResponse>({});
+  const [horarios, setHorarios] = useState<HorariosHomeResponse>(HORARIOS_FALLBACK);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch(`${API_URL}/api/public/horarios-home`, {
+      headers: { Accept: "application/json" },
+      cache: "no-store",
+    })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (
+          !cancelled &&
+          data &&
+          typeof data === "object" &&
+          Array.isArray(data.dias) &&
+          data.feriados
+        ) {
+          setHorarios(data as HorariosHomeResponse);
+        }
+      })
+      .catch(() => {
+        /* si falla, usamos HORARIOS_FALLBACK */
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -290,10 +461,10 @@ export default function Home() {
             <Image
               src="/icons/icon-512.png"
               alt="Gimnasio Cris"
-              width={96}
-              height={96}
+              width={128}
+              height={128}
               priority
-              className="w-10 h-10 md:w-12 md:h-12"
+              className="w-12 h-12 md:w-16 md:h-16"
             />
           </a>
           <div className="hidden lg:flex items-center gap-8">
@@ -815,51 +986,51 @@ export default function Home() {
               <span className="text-gym-gold">Excusas chicas.</span>
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 border border-gym-border reveal stagger-children">
-              {[
-                {
-                  days: "Lunes a Viernes",
-                  time: "06:30 — 23:30",
-                  caption: "17 horas por día. Elegí la tuya.",
-                  closed: false,
-                },
-                {
-                  days: "Sábados",
-                  time: "08:00 — 18:00",
-                  caption: "10 horas para ponerte al día.",
-                  closed: false,
-                },
-                {
-                  days: "Domingos",
-                  time: "Cerrado",
-                  caption: "El único día que descansan los fierros. Aprovechalo vos también.",
-                  closed: true,
-                },
-              ].map((slot, i) => (
+            {(() => {
+              const scheduleSlots = groupSchedule(horarios);
+              const isDense = scheduleSlots.length >= 4;
+              const gridColsClass = isDense ? "md:grid-cols-4" : "md:grid-cols-3";
+              const timeClass = isDense
+                ? "text-2xl md:text-2xl lg:text-3xl xl:text-4xl"
+                : "text-3xl md:text-4xl lg:text-5xl";
+              const paddingClass = isDense
+                ? "p-6 md:p-6 lg:p-10"
+                : "p-8 md:p-10 lg:p-12";
+              return (
                 <div
-                  key={slot.days}
-                  className={`p-8 md:p-10 lg:p-12 ${
-                    i < 2 ? "border-b md:border-b-0 md:border-r border-gym-border" : ""
-                  } ${slot.closed ? "bg-gym-surface" : ""}`}
+                  className={`grid grid-cols-1 ${gridColsClass} border border-gym-border reveal stagger-children`}
                 >
-                  <span className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.35em] text-gym-gold block mb-5 font-bold">
-                    {slot.days}
-                  </span>
-                  <span
-                    className={`block font-heading text-3xl md:text-4xl lg:text-5xl tracking-tight leading-none ${
-                      slot.closed
-                        ? "text-gym-text-tertiary italic"
-                        : "text-gym-chalk"
-                    }`}
-                  >
-                    {slot.time}
-                  </span>
-                  <p className="mt-5 text-gym-text-tertiary text-sm md:text-[15px] font-light leading-snug max-w-[240px]">
-                    {slot.caption}
-                  </p>
+                  {scheduleSlots.map((slot, i) => (
+                    <div
+                      key={slot.key}
+                      className={`${paddingClass} ${
+                        i < scheduleSlots.length - 1
+                          ? "border-b md:border-b-0 md:border-r border-gym-border"
+                          : ""
+                      } ${slot.closed ? "bg-gym-surface" : ""}`}
+                    >
+                      <span className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.35em] text-gym-gold block mb-5 font-bold">
+                        {slot.label}
+                      </span>
+                      <span
+                        className={`block font-heading ${timeClass} tracking-tight leading-none whitespace-nowrap ${
+                          slot.closed
+                            ? "text-gym-text-tertiary italic"
+                            : "text-gym-chalk"
+                        }`}
+                      >
+                        {slot.time}
+                      </span>
+                      {slot.caption && (
+                        <p className="mt-5 text-gym-text-tertiary text-sm md:text-[15px] font-light leading-snug max-w-[240px]">
+                          {slot.caption}
+                        </p>
+                      )}
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              );
+            })()}
           </div>
         </section>
 
