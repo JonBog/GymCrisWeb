@@ -151,6 +151,7 @@ const PLAN_DEFINITIONS: Array<{
   fallbackPrice: number;
   desc: string;
   featured: boolean;
+  tagline: string;
 }> = [
   {
     key: "clase",
@@ -158,6 +159,7 @@ const PLAN_DEFINITIONS: Array<{
     fallbackPrice: 7000,
     desc: "Venite a probar un día. Si te gusta el fierro y la gente, hablamos.",
     featured: false,
+    tagline: "Para probar",
   },
   {
     key: "semanal",
@@ -165,6 +167,7 @@ const PLAN_DEFINITIONS: Array<{
     fallbackPrice: 12000,
     desc: "Siete días de acceso completo. Ideal para testear antes de comprometerte al mes.",
     featured: false,
+    tagline: "Prueba corta",
   },
   {
     key: "mensual",
@@ -172,6 +175,7 @@ const PLAN_DEFINITIONS: Array<{
     fallbackPrice: 33000,
     desc: "El plan que usa la mayoría. Acceso libre todo el mes.",
     featured: true,
+    tagline: "Más elegido",
   },
 ];
 
@@ -185,6 +189,7 @@ const PROMO_DEFINITIONS: Array<{
   fallbackPrice: number;
   desc: string;
   note: string | null;
+  tagline: string;
 }> = [
   {
     key: "trimestral",
@@ -192,6 +197,7 @@ const PROMO_DEFINITIONS: Array<{
     fallbackPrice: 85000,
     desc: "Tres meses pagando de una. Para los que ya saben que esto es a largo plazo.",
     note: null,
+    tagline: "Mejor precio/mes",
   },
   {
     key: "familiar",
@@ -199,6 +205,7 @@ const PROMO_DEFINITIONS: Array<{
     fallbackPrice: 30000,
     desc: "Para grupos de tres o más. Se entrena mejor acompañado.",
     note: "c/u · 3 personas o más",
+    tagline: "En grupo",
   },
 ];
 
@@ -437,16 +444,20 @@ export default function Home() {
     ),
     desc: def.desc,
     featured: def.featured,
+    tagline: def.tagline,
   }));
 
-  const promos = PROMO_DEFINITIONS.map((def) => ({
-    name: def.name,
-    price: formatPrice(
-      typeof promoPrices[def.key] === "number" ? (promoPrices[def.key] as number) : def.fallbackPrice,
-    ),
-    desc: def.desc,
-    note: def.note,
-  }));
+  const promos = PROMO_DEFINITIONS
+    .filter((def) => promoPrices[def.key] !== null)
+    .map((def) => ({
+      name: def.name,
+      price: formatPrice(
+        typeof promoPrices[def.key] === "number" ? (promoPrices[def.key] as number) : def.fallbackPrice,
+      ),
+      desc: def.desc,
+      note: def.note,
+      tagline: def.tagline,
+    }));
 
   return (
     <>
@@ -883,11 +894,13 @@ export default function Home() {
                       : ""
                   } ${plan.featured ? "bg-gym-surface" : ""}`}
                 >
-                  {plan.featured && (
-                    <span className="absolute top-6 right-6 font-mono text-[9px] uppercase tracking-[0.3em] text-gym-gold-text bg-gym-gold px-2.5 py-1 font-bold">
-                      Recomendado
-                    </span>
-                  )}
+                  <span
+                    className={`absolute top-6 right-6 font-mono text-[9px] uppercase tracking-[0.3em] font-bold ${
+                      plan.featured ? "text-gym-gold" : "text-gym-text-tertiary"
+                    }`}
+                  >
+                    {plan.tagline}
+                  </span>
 
                   <span className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.35em] text-gym-gold font-bold mb-5 md:mb-6">
                     {plan.name}
@@ -916,6 +929,8 @@ export default function Home() {
               ))}
             </div>
 
+            {promos.length > 0 && (
+              <>
             <div className="mt-10 md:mt-14 flex items-center gap-3">
               <span className="w-8 h-px bg-gym-gold" />
               <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-gym-gold">
@@ -925,7 +940,7 @@ export default function Home() {
             <p className="mt-4 text-gym-text-tertiary text-sm md:text-base font-light leading-relaxed max-w-2xl mb-8 md:mb-10">
               Para los que ya saben que esto es a largo plazo, o para venir acompañado.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 border border-gym-border reveal stagger-children">
+            <div className={`grid grid-cols-1 ${promos.length === 2 ? "md:grid-cols-2" : "md:grid-cols-1 max-w-md"} border border-gym-border reveal stagger-children`}>
               {promos.map((promo, i) => (
                 <div
                   key={promo.name}
@@ -935,6 +950,10 @@ export default function Home() {
                       : ""
                   }`}
                 >
+                  <span className="absolute top-6 right-6 font-mono text-[9px] uppercase tracking-[0.3em] font-bold text-gym-text-tertiary">
+                    {promo.tagline}
+                  </span>
+
                   <span className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.35em] text-gym-gold font-bold mb-5 md:mb-6">
                     {promo.name}
                   </span>
@@ -964,6 +983,8 @@ export default function Home() {
                 </div>
               ))}
             </div>
+              </>
+            )}
 
           </div>
         </section>
